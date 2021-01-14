@@ -1,0 +1,290 @@
+# time series
+
+# 실습 1: AirPassengers
+?AirPassengers # 내장 데이터 설명: 단위 천명
+
+## 1. Loading the Data Set
+data(AirPassengers) # 데이터 불러오기
+class(AirPassengers) # 데이터 속성 확인하기
+
+start(AirPassengers) # 시작시점 확인
+end(AirPassengers) # 종료시점 확인
+frequency(AirPassengers) # 주기 확인
+summary(AirPassengers) # 요약통계
+str(AirPassengers) # 데이터 구조 확인하기 
+
+## 2. 시계열 시각화와 패턴 분석
+plot(AirPassengers) # a trend component which grows the passenger year by year. -> address the trend component
+                    # a seasonal component which has a cycle less than 12 months.
+                    # The variance in the data keeps on increasing with time. ->  remove unequal variances using log of the series
+
+
+abline(reg=lm(AirPassengers~time(AirPassengers))) # 회귀직선 추가하기
+
+?aggregate() # Compute Summary Statistics of Data Subsets
+             # a function to compute the summary statistics which can be applied to all data subsets.
+plot(aggregate(AirPassengers, FUN=mean)) # 평균값으로 집계화하여 그래프 작성
+
+?cycle() # the positions in the cycle of each observation.
+cycle(AirPassengers) # 주기 확인: 주기에서의 결측치 확인
+boxplot(AirPassengers~cycle(AirPassengers)) # 주기(월)별 박스그래프 
+
+plot(decompose(AirPassengers)) # 시계열 분해 그래프 생성
+
+## 3. 시계열 안정성 진단 및 검증
+library(tseries) # install.packages("tseries")
+?adf.test() # Augmented Dickey-Fuller Test for the null hypothesis of a unit root of a univarate time series 
+adf.test(AirPassengers, 
+         alternative="stationary", #  stationary enough to do any kind of time series modelling.
+         k=0) # the lag order to calculate the test statistic
+?Box.test() # Box-Pierce and Ljung-Box Tests
+Box.test(AirPassengers,
+         type = "Ljung-Box")
+
+?diff() # Lagged Differences
+plot(diff(log(AirPassengers))) # 로그 차분
+adf.test(diff(log(AirPassengers)), 
+         alternative="stationary", #  stationary enough to do any kind of time series modelling.
+         k=0)
+Box.test(diff(log(AirPassengers)),
+         type = "Ljung-Box")
+
+## 4. ARIMA모델 패러미터 탐색
+#### 차분(d=?) 정상화 시도
+?diff() # Lagged Differences, suitably lagged and iterated differences.
+d1 <- diff(log(AirPassengers), differences = 1)
+d2 <- diff(log(AirPassengers), differences = 2)
+d3 <- diff(log(AirPassengers), differences = 3)
+d4 <- diff(log(AirPassengers), differences = 4)
+par(mfrow = c(2,3))
+plot(AirPassengers) 
+plot(log(AirPassengers))
+plot(d1)
+plot(d2)
+plot(d3)
+plot(d4)
+par(mfrow = c(1,1))
+
+### p, q 탬색: 직접 확인하기(예: q)
+#### 이동평균 평활화
+library(TTR) # 미설치시 install.packages("TTR")
+?SMA() # Calculate various moving averages (MA) of a series.
+ma1 <- SMA(log(AirPassengers), n = 1) # q = ?
+ma2 <- SMA(log(AirPassengers), n = 2)
+ma3 <- SMA(log(AirPassengers), n = 3)
+ma4 <- SMA(log(AirPassengers), n = 4)
+par(mfrow = c(2,2))
+plot(ma1)
+plot(ma2)
+plot(ma3)
+plot(ma4)
+par(mfrow = c(1,1))
+
+### ACF와 PACF로 확인
+par(mfrow = c(2,2))
+acf(log(AirPassengers)) # the decay of ACF chart is very slow, which means that the population is not stationary.
+pacf(log(AirPassengers))
+acf(diff(log(AirPassengers))) #  # lag 2부터 점선 안에 존재. lag 절단값 = 2. --> MA(1): after regressing on the difference. value of p should be 0 as the ACF is the curve getting a cut off
+pacf(diff(log(AirPassengers))) # value of q should be 1 or 2. 
+par(mfrow = c(1,1))
+
+## 5. ARIMA 모델링
+?arima() # ARIMA Modelling of Time Series
+(fit <- arima(log(AirPassengers), 
+              c(0, 1, 1)))
+Box.test(fit$residuals, type="Ljung-Box")
+
+library(forecast) #install.packages("forecast")
+?auto.arima() # Fit best ARIMA model to univariate time series
+fit2 <- auto.arima(log(AirPassengers)) # 자동으로 ARIMA 모형 p,d,q 확인
+summary(fit2)
+Box.test(fit2$residuals, type="Ljung-Box")
+
+## 6. 시계열 예측
+?predict()
+pred <- predict(fit2, n.ahead = 5*12) # 5년 후 까지 예측
+
+?ts.plot() # Plot Multiple Time Series
+ts.plot(AirPassengers,
+        exp(pred$pred), # 자연로그 e (= 2.718...)
+        log = "y", 
+        lty = c(1,3), # 선형태(1=실측치, 2=예측치)
+        gpars=list(xlab="Month", ylab="Int. Air Passengers(단위: 천명)"))
+
+# 실습 2:한국 월별 주택매매가격 지수  
+### 1. 데이터 불러오기와 탐색하기
+setwd("K:\\기타\\2019년2학기\\수치해석\\실습데이터")
+list.files() # 파일 확인
+
+library(readxl)
+# 주택매매가격지수: 주택매매가격을 기준시점(2017.11=100.0)과 조사시점의 가격비를 이용하여 기준시점이 100인 수치로 환산한 값
+df.h <- read_xlsx("월별_주택매매가격지수_시도.xlsx", 1) # 엑셀자료 불러오기
+str(df.h) # 데이터 구조 확인하기
+summary(df.h) # 요약통계
+
+?ts() # to create time-series objects
+ts.h <-  ts(df.h$전국, # 시계열 자료로 변환: 전국 데이터 열 할당
+                 start = c(2003, 11), # 시작 주기
+                 frequency = 12) # 빈도
+class(ts.h) # 시계열 자료형으로 변환되었는 지 확인
+start(ts.h)
+end(ts.h)
+frequency(ts.h)
+summary(ts.h)
+
+## 2. 시계열 시각화와 패턴 분석
+plot(ts.h) # 그래프 작성
+
+
+abline(reg=lm(ts.h~time(ts.h))) # 회귀직선 추가
+plot(decompose(ts.h)) # 시계열 분해 그래프 작성
+
+## 3. 시계열 안정성 진단 및 검증
+adf.test(ts.h, # 단위근 검정
+         alternative="stationary", #  stationary enough to do any kind of time series modelling.
+         k=0)
+plot(diff(log(ts.h))) # 로그 차분 그래프 작성
+adf.test(diff(log(ts.h)), # 로그 차분 단위근 검정
+         alternative="stationary", #  stationary enough to do any kind of time series modelling.
+         k=0)
+
+## 4. ARIMA모델 패러미터 탐색
+# 차분 정상화
+?diff() # Lagged Differences, suitably lagged and iterated differences.
+d1 <- diff(log(ts.h), differences = 1)
+d2 <- diff(log(ts.h), differences = 2)
+par(mfrow = c(2,2))
+plot(ts.h) 
+plot(log(ts.h))
+plot(d1)
+plot(d2)
+par(mfrow = c(1,1))
+
+par(mfrow = c(2,2))
+acf(log(ts.h)) # the decay of ACF chart is very slow, which means that the population is not stationary.
+pacf(log(ts.h))
+acf(diff(log(ts.h))) #  # lag 7부터 점선 안에 존재. lag 절단값 = 6 ?
+pacf(diff(log(ts.h))) # lag 2 -> 1
+par(mfrow = c(1,1))
+
+## 5. ARIMA 모델링
+auto.arima(log(ts.h)) # # 자동으로 ARIMA 모형 확인
+fit <- arima(log(ts.h), 
+              c(0, 2, 0),
+             seasonal = list(order = c(0, 0, 0),
+              period = 12))
+summary(fit)
+Box.test(fit$residuals)
+
+## 6. 시계열 예측
+pred <- predict(fit, n.ahead = 5*12)
+
+ts.plot(ts.h,
+        exp(pred$pred), # 자연로그 e (= 2.718...)
+        log = "y", 
+        lty = c(1,3))
+
+# 실습 3: 다중시계열 분석: 서울시 지하철 이용자수
+setwd("K:\\기타\\2019년2학기\\수치해석\\실습데이터\\서울시대중교통")
+list.files()
+df.subway <- read.csv("seoul_subway_total_ridership.csv")
+summary(df.subway)
+
+ts.subway <- msts(df.subway$total,
+             seasonal.periods = c(7,365.25),
+             start = c(2013, 1, 1))
+plot(ts.subway, main="Daily subway ridership", xlab="Year", ylab="Daily Admissions")
+
+class(ts.subway)
+start(ts.subway)
+end(ts.subway)
+frequency(ts.subway)
+summary(ts.subway)
+
+## 2. 시계열 시각화와 패턴 분석
+plot(ts.subway) 
+plot(decompose(ts.subway))
+
+library(forecast)
+?tbats() # TBATS model (Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal components)
+tbats <- tbats(ts.subway)
+
+plot(tbats, main="Multiple Season Decomposition") # 시간이 오래 걸림
+
+?mstl() # Multiple seasonal decomposition
+head(mstl(ts.subway))
+?autoplot() #  ggplot2 to draw a particular plot for an object of a particular class in a single command.
+autoplot(mstl(ts.subway))
+
+
+## 3. 시계열 안정성 진단 및 검증
+adf.test(ts.subway, 
+         alternative="stationary", #  stationary enough to do any kind of time series modelling.
+         k=0)
+Box.test(ts.subway)
+
+## 4. ARIMA모델 패러미터 탐색
+auto.arima(ts.subway) # 자동으로 ARIMA 모형 패러미터 확인: 시간이 오래 걸림
+
+## 5. ARIMA 모델링
+fit <- arima(ts.subway, # 시간 오래 걸림
+             c(5, 0, 0),
+             seasonal = list(order = c(0, 1, 0),
+                           period = 365))
+fit
+Box.test (fit$residuals, lag = 1, type = "Ljung")
+
+## 6. 시계열 예측
+?stlf() # Forecasting using stl objects
+forecast <- stlf(ts.subway)
+summary(forecast)
+autoplot(stlf(ts.subway))
+
+
+##*************** 연습 문제 05
+# 서울시 일별 지하철 이용자수 데이터 중에서 오전첨두시(tot_amPeak) 승하차수를 7일 주기가 아닌 1년 주기(365.25)로만 설정하여 ARIMA의 적합한 패터미터 값이 얼마 인지 auto.arima()함수를 활용하여 확인하시오.
+df.subway <- read.csv("seoul_subway_total_ridership.csv")
+summary(df.subway)
+
+ts.subway2 <- ts(df.subway$tot_amPeak ,
+                 frequency = 365.25,
+                  start = c(2013, 1, 1))
+adf.test(ts.subway2)
+
+fit <- auto.arima(ts.subway2)
+summary(fit)
+
+Box.test(fit$residuals)
+
+##*************** 연습 문제 06
+# 서울시 월별 주택매매가격지수(df.h$서울)를 이용하여 ARIMA의 적합한 패터미터 값이 얼마 인지 auto.arima()함수를 활용하여 확인하시오.
+summary(df.h)
+ts.h.seoul <-  ts(df.h$서울특별시, # 시계열 자료로 변환: 전국 데이터 열 할당
+            start = c(2003, 11), # 시작 주기
+            frequency = 12) # 빈도
+
+fit <- auto.arima(ts.h.seoul)
+summary(fit)
+
+adf.test(fit$residuals)
+Box.test(fit$residuals)
+
+##*************** 연습 문제 07
+# 서울시 일별 버스이용자수 데이터 중 일별 승차자수(on_bus) 자료를 활용하여 ARIMA 모형의 p, d, q를 적합하게 auto.arima()함수 구축 후 이 모델링 후의 잔차에 대한 자기상관성 검정을 실시하시오.
+list.files()
+
+df.bus <- read.csv("seoul_bus_ridership.csv")
+summary(df.bus)
+
+ts.bus <- ts(df.bus$on_bus ,
+                 frequency = 365.25,
+                 start = c(2015, 1, 1))
+adf.test(ts.bus)
+
+fit <- auto.arima(ts.bus)
+summary(fit)
+
+adf.test(fit$residuals)
+?Box.test()
+Box.test(fit$residuals, type = "Box-Pierce")
+Box.test(fit$residuals, type = "Ljung-Box")

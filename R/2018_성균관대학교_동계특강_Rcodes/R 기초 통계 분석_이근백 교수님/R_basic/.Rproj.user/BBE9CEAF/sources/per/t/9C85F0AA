@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517393403399.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4208160036",
+    "id" : "9C85F0AA",
+    "lastKnownWriteTime" : 1517393422,
+    "last_content_update" : 1517393422059,
+    "path" : "D:/R_basic/R_basic4.R",
+    "project_path" : "R_basic4.R",
+    "properties" : {
+        "cursorPosition" : "10,15",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

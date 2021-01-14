@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517567215815.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3286299011",
+    "id" : "D491F950",
+    "lastKnownWriteTime" : 1517572620,
+    "last_content_update" : 1517572620021,
+    "path" : "D:/R_bigdata(advanced)/R_bigdata2.R",
+    "project_path" : "R_bigdata2.R",
+    "properties" : {
+        "cursorPosition" : "128,42",
+        "scrollLine" : "107",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

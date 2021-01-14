@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521619170113.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2876122862",
+    "id" : "66CAFC29",
+    "lastKnownWriteTime" : 1522325127,
+    "last_content_update" : 1522325127461,
+    "path" : "D:/Time Series/lec_180321.R",
+    "project_path" : "lec_180321.R",
+    "properties" : {
+        "cursorPosition" : "98,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

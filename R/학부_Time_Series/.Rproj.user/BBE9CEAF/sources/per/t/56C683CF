@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521095333587.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3136690495",
+    "id" : "56C683CF",
+    "lastKnownWriteTime" : 1521619154,
+    "last_content_update" : 1521619154198,
+    "path" : "D:/Time Series/Time Series Graph_homework.R",
+    "project_path" : "Time Series Graph_homework.R",
+    "properties" : {
+        "cursorPosition" : "14,30",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

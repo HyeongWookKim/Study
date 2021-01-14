@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521123568585.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1613859998",
+    "id" : "7D3FD064",
+    "lastKnownWriteTime" : 1521126277,
+    "last_content_update" : 1521126277158,
+    "path" : "D:/Advanced R_MOOC/lec10_4.R",
+    "project_path" : "lec10_4.R",
+    "properties" : {
+        "cursorPosition" : "45,17",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

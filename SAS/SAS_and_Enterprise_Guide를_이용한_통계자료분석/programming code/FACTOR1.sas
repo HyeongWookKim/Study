@@ -1,0 +1,20 @@
+/*  FACTOR1.SAS :  FACTOR ANALYSIS OF EXAM SCORES   */
+DATA STUDY (TYPE=CORR);
+  TITLE 'FACTOR ANALYSIS; EXAM SCORES OF N=220 MALE STUDENTS';
+  _TYPE_='CORR';
+  INPUT _NAME_ $ X1-X6;
+  LABEL X1='GAELIC' X2='ENGLISH' X3='HISTORY'
+        X4='ARITHMETIC' X5='ALGEBRA' X6='GEOMETRY';
+DATALINES;
+X1    1.000   .      .      .      .      .
+X2     .439  1.000   .      .      .      .
+X3     .410   .351  1.000   .      .      .
+X4     .288   .354   .164  1.000   .      .
+X5     .329   .320   .190   .595  1.000   .
+X6     .248   .329   .181   .470   .464  1.000
+;
+RUN;
+PROC PRINT;
+RUN;
+PROC FACTOR  MSA PREPLOT ROTATE=VARIMAX PLOT;
+RUN;   QUIT;

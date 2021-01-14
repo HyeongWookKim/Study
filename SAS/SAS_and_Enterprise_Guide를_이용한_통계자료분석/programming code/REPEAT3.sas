@@ -1,0 +1,28 @@
+  /*  REPEAT3.SAS : 히스타민 처방의 효과 분석  */
+    DATA DOGS;
+       INPUT DRUG $ DEPL $ HIST0 HIST1 HIST3 HIST5;
+       LHIST0=log(HIST0); LHIST1=log(HIST1);
+       LHIST3=log(HIST3); LHIST5=log(HIST5);
+      DATALINES;
+    MORPHINE N  .04  .20  .10  .08
+    MORPHINE N  .02  .06  .02  .02
+    MORPHINE N  .07 1.40  .48  .24
+    MORPHINE N  .17  .57  .35  .24
+    MORPHINE Y  .10  .09  .13  .14
+    MORPHINE Y  .12  .11  .10   .
+    MORPHINE Y  .07  .07  .06  .07
+    MORPHINE Y  .05  .07  .06  .07
+    TRIMETH  N  .03  .62  .31  .22
+    TRIMETH  N  .03 1.05  .73  .60
+    TRIMETH  N  .07  .83 1.07  .80
+    TRIMETH  N  .09 3.13 2.06 1.23
+    TRIMETH  Y  .10  .09  .09  .08
+    TRIMETH  Y  .08  .09  .09  .10
+    TRIMETH  Y  .13  .10  .12  .12
+    TRIMETH  Y  .06  .05  .05  .05
+    ;
+    PROC GLM;
+       CLASS DRUG DEPL;
+       MODEL LHIST0--LHIST5=DRUG DEPL DRUG*DEPL/NOUNI;
+       REPEATED TIME 4 (0 1 3 5) POLYNOMIAL/PRINTE SUMMARY;
+    RUN; QUIT;

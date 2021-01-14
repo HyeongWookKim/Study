@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517315632508.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3677336166",
+    "id" : "7AD07D7D",
+    "lastKnownWriteTime" : 1517393442,
+    "last_content_update" : 1517393442403,
+    "path" : "D:/R_basic/R_basic_practices.R",
+    "project_path" : "R_basic_practices.R",
+    "properties" : {
+        "cursorPosition" : "63,21",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

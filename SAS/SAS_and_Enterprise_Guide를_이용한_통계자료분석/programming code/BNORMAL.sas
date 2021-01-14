@@ -1,0 +1,13 @@
+/* BNORMAL.SAS : BIVARIATE NORMAL DENSITY */
+DATA BNORMAL;
+  FORMAT Z 5.2;
+  DO X=-2.5 TO 2.5 BY .5;
+     DO Y=-2.5 TO 2.5 BY .5;
+        Z= EXP(-(X**2 + y**2)/2)/6.28;
+        OUTPUT;
+     END;
+  END;
+RUN;
+PROC PRINT DATA=BNORMAL;
+RUN;
+QUIT;

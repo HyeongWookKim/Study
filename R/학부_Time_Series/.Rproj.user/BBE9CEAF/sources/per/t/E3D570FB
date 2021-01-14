@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527838807469.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3929071468",
+    "id" : "E3D570FB",
+    "lastKnownWriteTime" : 1529652991,
+    "last_content_update" : 1529652991,
+    "path" : "D:/Time Series/Assignment_final report.R",
+    "project_path" : "Assignment_final report.R",
+    "properties" : {
+        "cursorPosition" : "45,0",
+        "scrollLine" : "26",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

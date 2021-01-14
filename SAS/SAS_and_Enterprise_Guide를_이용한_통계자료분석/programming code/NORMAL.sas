@@ -1,0 +1,14 @@
+/* NORMAL.SAS : NORMAL DENSITY */
+DATA NORMAL;
+  FORMAT Z 5.1;
+  DO X=-3 TO 3 BY 0.01;
+        Z= EXP(-(X**2 ))/(sqrt(6.28));
+        OUTPUT;
+     END;
+RUN;
+
+PROC GPLOT DATA=BNORMAL;
+  PLOT Z*X;
+TITLE 'NORRMAL DENSITY ';
+RUN;
+QUIT;

@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1525493928305.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4202073763",
+    "id" : "F298493D",
+    "lastKnownWriteTime" : 1528368602,
+    "last_content_update" : 1528368602576,
+    "path" : "D:/Time Series/Homework_180502.R",
+    "project_path" : "Homework_180502.R",
+    "properties" : {
+        "cursorPosition" : "107,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

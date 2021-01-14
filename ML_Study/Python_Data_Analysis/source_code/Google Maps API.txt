@@ -1,0 +1,11 @@
+<Google Maps Geocoding API>
+** 사용 시 주의사항!!
+- 블로깅 또는 깃허브에 공유 시, API key 값이 노출되지 않도록
+- "*****************" 이런 식으로 코드를 수정해서 올릴 것!!
+
+
+<이전 키>
+AIzaSyAhK3ELtuVwI91ayrt6944HDSBLbA33T0Q
+
+<새로 발급받은 키>
+AIzaSyD5HxWprpBCVX3bl4mMcNpjNbhmSXfnfwg

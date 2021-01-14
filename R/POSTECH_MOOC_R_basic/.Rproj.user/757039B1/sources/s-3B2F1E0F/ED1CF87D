@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1592117298383.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3073933121",
+    "id" : "ED1CF87D",
+    "lastKnownWriteTime" : 1592233749,
+    "last_content_update" : 1592233749939,
+    "path" : "C:/Users/Brian/Desktop/Data Science/R/POSTECH_MOOC_R_basic/practice.R",
+    "project_path" : "practice.R",
+    "properties" : {
+        "cursorPosition" : "0,12",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
